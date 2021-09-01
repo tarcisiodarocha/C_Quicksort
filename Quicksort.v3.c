@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <time.h>
 
 void swap(int* a, int* b) {
    int t = *a;
@@ -19,9 +20,9 @@ int partition (int arr[], int low, int high) {
    return (i + 1);
 }
 
-void quickSort(int arr[], int low, int high){
+void quickSort(int arr[], long int low, long int high){
    if (low < high){
-      int pi = partition(arr, low, high);
+      long int pi = partition(arr, low, high);
       quickSort(arr, low, pi - 1);
       quickSort(arr, pi + 1, high);
    }
@@ -35,10 +36,28 @@ void printArray(int arr[], int size){
 }
 
 int main(){
-   int arr[] = {10, 8, 11, 15, 7, 12, 33, 3};
-   int n = sizeof(arr)/sizeof(arr[0]);
+
+   long int n = 100000000;
+   int *arr = (int*)malloc(n * sizeof(int));
+   srand(0);
+   long int i;
+   for (i = 0; i < n; i++) {
+      arr[i] = rand() % n;
+   }
+   
+   
+   clock_t start, end;
+   double cpu_time_used;
+     
+   start = clock();
    quickSort(arr, 0, n-1);
-   printf("The sorted array is: \n");
-   printArray(arr, n);
+   end = clock();
+  
+   cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+   
+   printf("CLOCKS_PER_SEC: %ld \n", CLOCKS_PER_SEC);
+   printf("CPU time used is: %f \n", cpu_time_used);
+   
+   
    return 0;
 }
